@@ -1,0 +1,19 @@
+* GUI Protocol
+Standard error handling: the response to any message should be the atom ~ok~ on succcess, and the tuple ~{error, Atom, Text}~ on failure.
+
+** GUI to client
++ Joining a channel :: ~{join, Channel}~
+  + Channel: String starting with #
+  + returns: standard, ~Atom = user_already_joined~ for double joining
++ Writing messages :: ~{message_send, Channel, Msg}~
+  + Channel: String starting with #
+  + returns: standard, ~Atom = user_not_joined~ for sending message on wrong channel.
++ Asking for nickname :: ~whoami~
+  + returns: String with the nickname
++ Changing nickname :: ~{nick, Name}~
+  + Name: String
+  + returns: standard, ~Atom = nick_taken~ for duplicate nicks
+** Client to GUI
++ Received a message :: ~{message_receive, Channel, String}~
+  + Channel: String starting with #
+  + String: What to print
